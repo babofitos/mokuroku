@@ -2,16 +2,20 @@ form
   input(ng-model="xcoord", type="text", placeholder="X")
   input(ng-model="ycoord", type="text", placeholder="Y")
   input(ng-model="comment", type="text", placeholder="Comment")
-  button(ng-click="go()") Submit
+  button(ng-click="submit()") Submit
 table
   thead
     th Date
     th X
     th Y
     th Comments
-  tbody(ng-repeat="loot in loots")
-    tr 
+  tbody
+    tr(ng-repeat="loot in loots")
+      input(type='hidden', value="{{loot._id}}")
       td {{loot.date}}
       td {{loot.xcoord}}
       td {{loot.ycoord}}
       td {{loot.comment}}
+      td
+        button(ng-click="edit()", type="button") Edit
+        button(ng-click="delete()", type="button") Delete

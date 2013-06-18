@@ -2,7 +2,8 @@ function IndexCtrl($scope, $http, $location) {
   $http.get('/list').success(function(data, status) {
     $scope.loots = data
   })
-  $scope.go = function() {
+
+  $scope.submit = function() {
     var postData = {
       xcoord: $scope.xcoord
     , ycoord: $scope.ycoord
@@ -15,6 +16,14 @@ function IndexCtrl($scope, $http, $location) {
       $scope.ycoord = ''
       $scope.comment = ''
     })
+  }
+
+  $scope.edit = function() {
+    $http.put()
+  }
+
+  $scope.delete = function() {
+    $http.delete()
   }
 }
 
