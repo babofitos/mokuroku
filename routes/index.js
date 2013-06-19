@@ -4,7 +4,8 @@
  */
 
 exports.index = function(req, res){
-  res.render('index');
+  console.log('req.user', req.user)
+  res.render('layout');
 }
 
 exports.partials = function (req, res) {

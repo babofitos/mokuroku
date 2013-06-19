@@ -8,8 +8,9 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , api = require('./routes/api')
-
-
+  , config = require('./config.json')
+  , MongoStore = require('connect-mongo')(express)
+  , passport = require('passport')
 
 var app = express()
 
@@ -21,10 +22,24 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.db = db
+  app.passport = passport
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.limit('50kb'))
   app.use(express.bodyParser());
+  app.use(express.cookieParser())
+  app.use(express.session({
+    secret: config.cookie_secret
+  , store: new MongoStore({
+      db: 'lootlistdb'
+    })
+  }))
+  app.use(passport.initialize())
+  app.use(passport.session())
+  app.use(function(req, res, next) {
+    res.locals.user = req.user
+    next()
+  })
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -42,8 +57,9 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index)
-app.get('/partials/:name', routes.partials)
 
+app.get('/partials/:name', routes.partials)
+require('./routes/login')(app)
 require('./routes/api')(app)
 
 http.createServer(app).listen(app.get('port'), function(){
