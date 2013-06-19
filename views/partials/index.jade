@@ -12,10 +12,10 @@ table
   tbody
     tr(ng-repeat="loot in loots")
       input(type='hidden', value="{{loot._id}}")
-      td {{loot.date}}
-      td {{loot.xcoord}}
-      td {{loot.ycoord}}
-      td {{loot.comment}}
+      td {{loot.loot.date}}
+      td {{loot.loot.xcoord}}
+      td {{loot.loot.ycoord}}
+      td {{loot.loot.comment}}
       td
         button(ng-click="edit(loot)", type="button", ng-hide="loot.edit") Edit
         button(ng-click="submitEdited(loot)", type="button", ng-hide="loot.submit") Submit

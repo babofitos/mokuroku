@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-  console.log('req.user', req.user)
+  console.log(req.session)
   res.render('layout');
 }
 

@@ -1,6 +1,8 @@
 function IndexCtrl($scope, $http, $location) {
   $http.get('/list').success(function(data, status) {
-    for (var i=0;i<data.length;i++) {
+    console.log('data', data)
+    var len = data.length
+    for (var i=0;i<len;i++) {
       data[i].edit = false
       data[i].submit = true
       data[i].delete = false
@@ -16,8 +18,12 @@ function IndexCtrl($scope, $http, $location) {
     , comment: $scope.comment
     , date: new Date().toString()
     }
-    $http.post('/list/new', postData).success(function() {
-      $scope.loots.push(postData)
+    $http.post('/list', postData).success(function(data) {
+      data.edit = false
+      data.submit = true
+      data.delete = false
+      data.cancel = true
+      $scope.loots.push(data)
       $scope.xcoord = ''
       $scope.ycoord = ''
       $scope.comment = ''

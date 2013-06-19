@@ -1,6 +1,10 @@
 - if (user) {
   p Hello #{user.openid}
-  include ../index
+  form(method="post", action="/session")
+    input(type="hidden", name="_csrf", value=token)
+    input(type="hidden", name="_method", value="DELETE")
+    input(type="submit", value="Logout")
+  div(ng-view)
 - } else {
-  a(href='/login') Login
+  a(href='/session') Login
 - }

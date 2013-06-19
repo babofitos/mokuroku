@@ -1,6 +1,7 @@
 module.exports = function(app) {
   app.get('/list', function(req, res, next) {
-    app.db.all(function(err, results) {
+    //get openid from session and query db
+    app.db.all(req.user.openid, function(err, results) {
       if (err) next(err)
       else {
         res.json(results)
@@ -8,20 +9,21 @@ module.exports = function(app) {
     })
   })
 
-  app.post('/list/new', function(req, res) {
+  app.post('/list', function(req, res) {
     console.log(req.body)
-    app.db.save(req.body, function(err, result) {
+    app.db.save(req.user.openid, req.body, function(err, result) {
       if (err) {
         next(err)
       }
       else {
-        res.send(200)
+        console.log('post list result', result)
+        res.json(result)
       }
     })
   })
 
-  app.put('/list/:id/edit', function(req, res) {
-    app.db.edit(req.params.id, req.body, function(err) {
+  app.put('/list', function(req, res) {
+    app.db.edit(req.user.openid, req.body, function(err) {
       if (err) next(err)
       else res.send(200)
     })

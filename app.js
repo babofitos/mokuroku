@@ -11,6 +11,8 @@ var express = require('express')
   , config = require('./config.json')
   , MongoStore = require('connect-mongo')(express)
   , passport = require('passport')
+  , csrf = require('./routes/middleware/csrf').csrf
+  , csrfValue = require('./routes/middleware/csrf').csrfValue
 
 var app = express()
 
@@ -28,6 +30,7 @@ app.configure(function(){
   app.use(express.limit('50kb'))
   app.use(express.bodyParser());
   app.use(express.cookieParser())
+  app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.session({
     secret: config.cookie_secret
   , store: new MongoStore({
@@ -36,13 +39,19 @@ app.configure(function(){
   }))
   app.use(passport.initialize())
   app.use(passport.session())
+  //set value to receive x-xsrf-token header
+  app.use(express.csrf({value: csrfValue}))
+  app.use(function(req, res, next) {
+    //set cookie for angular csrf
+    res.cookie('XSRF-TOKEN', req.session._csrf)
+    next()
+  })
   app.use(function(req, res, next) {
     res.locals.user = req.user
     next()
   })
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
   app.use(function(err, req, res, next) {
     if (err) {
       console.log(err)
@@ -56,10 +65,10 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index)
+app.get('/', csrf, routes.index)
 
 app.get('/partials/:name', routes.partials)
-require('./routes/login')(app)
+require('./routes/session')(app)
 require('./routes/api')(app)
 
 http.createServer(app).listen(app.get('port'), function(){
