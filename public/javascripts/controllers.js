@@ -31,11 +31,10 @@ function IndexCtrl($scope, $http, $location) {
   }
 
   $scope.edit = function(loot) {
-    loot.edit = true
-    loot.submit = false
-    loot.delete = true
-    loot.cancel = false
-    loot.readonly = false
+    //get current loot and save to access incase user cancels
+    //clone it using JSON so that it doesnt reference same obj
+    $scope[loot._id] = JSON.parse(JSON.stringify(loot))
+    editModeToggle(loot)
   }
 
   $scope.submitEdited = function(loot, $index) {
@@ -49,13 +48,8 @@ function IndexCtrl($scope, $http, $location) {
       } 
     }
     $http.put('/list', putData).success(function() {
-      console.log('loot', loot)
       loot.loot = putData.loot
-      loot.edit = false
-      loot.submit = true
-      loot.delete = false
-      loot.cancel = true
-      loot.readonly = true
+      editModeToggle(loot)
       $scope.loots[$index] = loot
     })
   }
@@ -64,18 +58,17 @@ function IndexCtrl($scope, $http, $location) {
     $http.delete()
   }
 
-  $scope.cancel = function(loot) {
-    loot.edit = false
-    loot.submit = true
-    loot.delete = false
-    loot.cancel = true
+  $scope.cancel = function(loot, $index) {
+    //reverting to old data saved inside .edit
+    $scope.loots[$index] = $scope[loot._id]
+    editModeToggle(loot)
   }
 }
 
-// function LootDelCtrl($scope, $routeParams) {
-  
-// }
-
-// function LootEditCtrl($scope, $routeParams) {
-  
-// }
+function editModeToggle(inst) {
+  inst.edit = !inst.edit
+  inst.submit = !inst.submit
+  inst.delete = !inst.delete
+  inst.cancel = !inst.cancel
+  inst.readonly = !inst.readonly
+}

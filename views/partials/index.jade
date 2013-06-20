@@ -22,5 +22,5 @@ table
       td
         button(ng-click="edit(loot)", type="button", ng-hide="loot.edit") Edit
         button(ng-click="submitEdited(loot, $index)", type="button", ng-hide="loot.submit") Submit
-        button(ng-click="cancel(loot)", type="button", ng-hide="loot.cancel") Cancel 
+        button(ng-click="cancel(loot, $index)", type="button", ng-hide="loot.cancel") Cancel 
         button(ng-click="delete(loot)", type="button", ng-hide="loot.delete") Delete
