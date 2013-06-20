@@ -1,12 +1,12 @@
 function IndexCtrl($scope, $http, $location) {
   $http.get('/list').success(function(data, status) {
-    console.log('data', data)
     var len = data.length
     for (var i=0;i<len;i++) {
       data[i].edit = false
       data[i].submit = true
       data[i].delete = false
       data[i].cancel = true
+      data[i].readonly = true
     }
     $scope.loots = data
   })
@@ -35,6 +35,29 @@ function IndexCtrl($scope, $http, $location) {
     loot.submit = false
     loot.delete = true
     loot.cancel = false
+    loot.readonly = false
+  }
+
+  $scope.submitEdited = function(loot, $index) {
+    var putData = {
+      _id: loot._id
+    , loot: {
+        xcoord: loot.loot.xcoord
+      , ycoord: loot.loot.ycoord
+      , comment: loot.loot.comment
+      , date: new Date().toString()
+      } 
+    }
+    $http.put('/list', putData).success(function() {
+      console.log('loot', loot)
+      loot.loot = putData.loot
+      loot.edit = false
+      loot.submit = true
+      loot.delete = false
+      loot.cancel = true
+      loot.readonly = true
+      $scope.loots[$index] = loot
+    })
   }
 
   $scope.delete = function(loot) {

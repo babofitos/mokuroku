@@ -13,11 +13,14 @@ table
     tr(ng-repeat="loot in loots")
       input(type='hidden', value="{{loot._id}}")
       td {{loot.loot.date}}
-      td {{loot.loot.xcoord}}
-      td {{loot.loot.ycoord}}
-      td {{loot.loot.comment}}
+      td 
+        input(ng-model="loot.loot.xcoord", type="text", ng-readonly="loot.readonly")
+      td
+        input(ng-model="loot.loot.ycoord", type="text", ng-readonly="loot.readonly")
+      td
+        input(ng-model="loot.loot.comment", type="text", ng-readonly="loot.readonly")
       td
         button(ng-click="edit(loot)", type="button", ng-hide="loot.edit") Edit
-        button(ng-click="submitEdited(loot)", type="button", ng-hide="loot.submit") Submit
+        button(ng-click="submitEdited(loot, $index)", type="button", ng-hide="loot.submit") Submit
         button(ng-click="cancel(loot)", type="button", ng-hide="loot.cancel") Cancel 
         button(ng-click="delete(loot)", type="button", ng-hide="loot.delete") Delete

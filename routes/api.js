@@ -23,9 +23,12 @@ module.exports = function(app) {
   })
 
   app.put('/list', function(req, res) {
+    console.log('req.body', req.body)
     app.db.edit(req.user.openid, req.body, function(err) {
       if (err) next(err)
-      else res.send(200)
+      else {
+        res.send(200)
+      }
     })
   })
 
