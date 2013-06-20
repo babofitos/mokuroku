@@ -54,8 +54,10 @@ function IndexCtrl($scope, $http, $location) {
     })
   }
 
-  $scope.delete = function(loot) {
-    $http.delete()
+  $scope.delete = function(loot, $index) {
+    $http.delete('/list/'+loot._id).success(function() {
+      $scope.loots.splice($index, 1)
+    })
   }
 
   $scope.cancel = function(loot, $index) {

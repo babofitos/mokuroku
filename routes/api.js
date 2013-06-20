@@ -23,7 +23,6 @@ module.exports = function(app) {
   })
 
   app.put('/list', function(req, res) {
-    console.log('req.body', req.body)
     app.db.edit(req.user.openid, req.body, function(err) {
       if (err) next(err)
       else {
@@ -32,7 +31,7 @@ module.exports = function(app) {
     })
   })
 
-  app.del('/list/:id/del', function(req, res) {
+  app.del('/list/:id', function(req, res) {
     app.db.delete(req.params.id, function(err, result) {
       if (err) next(err)
       else res.send(200)
