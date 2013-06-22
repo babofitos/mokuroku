@@ -13,6 +13,7 @@ var express = require('express')
   , passport = require('passport')
   , csrf = require('./routes/middleware/csrf').csrf
   , csrfValue = require('./routes/middleware/csrf').csrfValue
+  , getSteamSummary = require('./lib/steamapi')
 
 var app = express()
 
@@ -65,7 +66,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', csrf, routes.index)
+app.get('/', csrf, getSteamSummary, routes.index)
 
 app.get('/partials/:name', routes.partials)
 require('./routes/session')(app)

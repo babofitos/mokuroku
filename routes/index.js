@@ -4,8 +4,7 @@
  */
 
 exports.index = function(req, res){
-  console.log(req.session)
-  res.render('layout');
+  res.render('layout', {steam:''});
 }
 
 exports.partials = function (req, res) {

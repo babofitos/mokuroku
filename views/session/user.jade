@@ -1,10 +1,15 @@
 - if (user) {
-  p Hello #{user.openid}
+  p 
+    span#avatar
+      a(href=steam.profileurl) 
+        img(src=steam.avatar)
+    span#name #{steam.personaname}
   form(method="post", action="/session")
     input(type="hidden", name="_csrf", value=token)
     input(type="hidden", name="_method", value="DELETE")
     input(type="submit", value="Logout")
   div(ng-view)
 - } else {
-  a(href='/session') Login
+  a(href='/session')
+    img(src="/images/sits_small.png")
 - }

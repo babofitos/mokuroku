@@ -1,8 +1,18 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 1000px;
+  margin: 0 auto;
 }
 
 a {
   color: #00B7FF;
+}
+
+input[readonly] {
+  border: 1px solid transparent;
+}
+
+#name {
+  padding: 0 10px;
 }
