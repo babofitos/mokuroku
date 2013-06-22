@@ -23,6 +23,7 @@ function IndexCtrl($scope, $http, $location) {
       data.submit = true
       data.delete = false
       data.cancel = true
+      data.readonly = true
       $scope.loots.push(data)
       $scope.xcoord = ''
       $scope.ycoord = ''
