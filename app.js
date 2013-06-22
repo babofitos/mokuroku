@@ -17,13 +17,11 @@ var express = require('express')
 
 var app = express()
 
-// var db = app.settings.env == 'development' ? 
-//   require('./lib/db')(config.devdb.name, config.devdb.host, config.devdb.port)
-//   : require('./lib/db')(config.proddb.name, config.proddb.host, config.proddb.port)
 var db = app.settings.env == 'development' ? require('./lib/db')(config.devdb) 
   : require('./lib/db')(config.proddb)
 
 app.configure(function(){
+  app.use(express.static(path.join(__dirname, 'public')));
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -34,7 +32,7 @@ app.configure(function(){
   app.use(express.limit('50kb'))
   app.use(express.bodyParser());
   app.use(express.cookieParser())
-  app.use(express.static(path.join(__dirname, 'public')));
+
   app.use(express.session({
     secret: config.cookie_secret
   , store: new MongoStore({
@@ -42,7 +40,6 @@ app.configure(function(){
     })
   }))
   app.use(passport.initialize())
-  app.use(passport.session())
   //set value to receive x-xsrf-token header
   app.use(express.csrf({value: csrfValue}))
   app.use(function(req, res, next) {
@@ -51,7 +48,8 @@ app.configure(function(){
     next()
   })
   app.use(function(req, res, next) {
-    res.locals.user = req.user
+    //access user variable from templates
+    res.locals.user = req.session.user
     next()
   })
   app.use(express.methodOverride());

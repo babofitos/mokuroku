@@ -1,5 +1,6 @@
+//be logged in to access api
 function restrictUserToSelf (req, res, next) {
-  if (!req.user || req.session.passport.user.openid !== req.user.openid) {
+  if (!req.session.user) {
     res.send('Unauthorized', 401)
   } else {
     next()
