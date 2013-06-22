@@ -17,9 +17,11 @@ var express = require('express')
 
 var app = express()
 
-var db = app.settings.env == 'development' ? 
-  require('./lib/db')(config.devdb.name, config.devdb.host, config.devdb.port)
-  : require('./lib/db')(config.proddb.name, config.proddb.host, config.proddb.port)
+// var db = app.settings.env == 'development' ? 
+//   require('./lib/db')(config.devdb.name, config.devdb.host, config.devdb.port)
+//   : require('./lib/db')(config.proddb.name, config.proddb.host, config.proddb.port)
+var db = app.settings.env == 'development' ? require('./lib/db')(config.devdb) 
+  : require('./lib/db')(config.proddb)
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
