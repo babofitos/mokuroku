@@ -11,12 +11,17 @@ function IndexCtrl($scope, $http, $location) {
     $scope.loots = data
   })
 
+  $scope.readableDate = function(date) {
+    var date = new Date(date).toString().split(' GMT')
+    return date[0]
+  }
+
   $scope.submit = function() {
     var postData = {
       xcoord: $scope.xcoord
     , ycoord: $scope.ycoord
     , comment: $scope.comment
-    , date: new Date().toString()
+    , date: Date.now()
     }
     $http.post('/list', postData).success(function(data) {
       data.edit = false
@@ -45,7 +50,7 @@ function IndexCtrl($scope, $http, $location) {
         xcoord: loot.loot.xcoord
       , ycoord: loot.loot.ycoord
       , comment: loot.loot.comment
-      , date: new Date().toString()
+      , date: Date.now()
       } 
     }
     $http.put('/list', putData).success(function() {

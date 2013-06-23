@@ -1,13 +1,17 @@
 - if (user) {
-  p 
-    span#avatar
-      a(href=steam.profileurl) 
-        img(src=steam.avatar)
-    span#name #{steam.personaname}
-  form(method="post", action="/session")
-    input(type="hidden", name="_csrf", value=token)
-    input(type="hidden", name="_method", value="DELETE")
-    input(type="submit", value="Logout")
+  div#navbar
+    ol
+      li
+        p#profile
+          span#avatar
+            a(href=steam.profileurl) 
+              img(src=steam.avatar)
+          span#name #{steam.personaname}
+      li
+        form(id="logout-form", method="post", action="/session")
+          input(type="hidden", name="_csrf", value=token)
+          input(type="hidden", name="_method", value="DELETE")
+          input#logout-button(type="submit", value="Logout")
   div(ng-view)
 - } else {
   a(href='/session')

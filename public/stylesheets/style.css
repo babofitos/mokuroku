@@ -16,3 +16,37 @@ input[readonly] {
 #name {
   padding: 0 10px;
 }
+
+#navbar {
+  float:right;
+  margin-bottom: 20px;
+}
+
+#new-loot-form {
+  clear: both;
+}
+
+#navbar li {
+  list-style: none;
+  float:left;
+}
+
+#profile {
+  margin: 0;
+}
+
+table {
+  width:1000px;
+}
+
+table th {
+  text-align: left;
+}
+
+.coord-th {
+  width:30px;
+}
+
+.date-th {
+  width:200px;
+}

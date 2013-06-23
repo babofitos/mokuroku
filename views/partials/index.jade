@@ -1,22 +1,22 @@
-form
+form#new-loot-form
   input(ng-model="xcoord", type="text", placeholder="X")
   input(ng-model="ycoord", type="text", placeholder="Y")
   input(ng-model="comment", type="text", placeholder="Comment")
   button(ng-click="submit()") Submit
 table
   thead
-    th Date
-    th X
-    th Y
+    th.date-th Date
+    th.coord-th X
+    th.coord-th Y
     th Comments
   tbody
     tr(ng-repeat="loot in loots")
       input(type='hidden', value="{{loot._id}}")
-      td {{loot.loot.date}}
+      td {{readableDate(loot.loot.date)}}
       td 
-        input(ng-model="loot.loot.xcoord", type="text", ng-readonly="loot.readonly")
+        input.coord-th(ng-model="loot.loot.xcoord", type="text", ng-readonly="loot.readonly")
       td
-        input(ng-model="loot.loot.ycoord", type="text", ng-readonly="loot.readonly")
+        input.coord-th(ng-model="loot.loot.ycoord", type="text", ng-readonly="loot.readonly")
       td
         input(ng-model="loot.loot.comment", type="text", ng-readonly="loot.readonly")
       td
