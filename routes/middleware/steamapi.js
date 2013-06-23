@@ -1,4 +1,4 @@
-var apikey = require('../config.json').steamapikey
+var apikey = require('../../config.json').steamapikey
   , request = require('request')
   , host = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='
 

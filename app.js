@@ -13,7 +13,7 @@ var express = require('express')
   , passport = require('passport')
   , csrf = require('./routes/middleware/csrf').csrf
   , csrfValue = require('./routes/middleware/csrf').csrfValue
-  , getSteamSummary = require('./lib/steamapi')
+  , getSteamSummary = require('./routes/middleware/steamapi')
 
 var app = express()
 
