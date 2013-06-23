@@ -6,9 +6,9 @@ module.exports = function(app) {
     , realm: 'http://localhost:3000'
     }
   , function(identifier, profile, done) {
-      app.db.findByOpenID({openid: identifier}, function(err, user) {
-        return done(err, user)
-      })
+      //callback after finishing auth
+      //done passes to passport.authenticate
+      return done(null, identifier)
     }
   ))
 
@@ -20,13 +20,13 @@ module.exports = function(app) {
   //set session to be the returned document with openid & _id
   app.get('/auth/return', function(req, res, next) {
     app.passport.authenticate('steam', function(err, user, info) {
-      if (err) next(err)
-      else if (!user) res.redirect('/')
-      else {
-        app.db.findByOpenID({openid: user.openid}, function(err, result) {
+      if (err || !user) { 
+        res.redirect('/')
+      } else {
+        app.db.findByOpenID({openid: user}, function(err, result) {
           if (err) next(err)
           else {
-            req.session.user = user
+            req.session.user = result
             return res.redirect('/')
           }
         })
