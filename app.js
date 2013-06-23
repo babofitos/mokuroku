@@ -16,9 +16,22 @@ var express = require('express')
   , getSteamSummary = require('./routes/middleware/steamapi')
 
 var app = express()
-
+app.settings.env = 'production'
 var db = app.settings.env == 'development' ? require('./lib/db')(config.devdb) 
   : require('./lib/db')(config.proddb)
+
+var devStore = {
+  db: config.devdbname
+, 
+}
+var prodStore = {
+  db: config.proddbname
+, port: config.prodport
+, host: config.prodhost
+, username: config.produser
+, password: config.prodpw
+}
+var sessionStore = app.settings.env == 'development' ? devStore : prodStore
 
 app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
@@ -35,9 +48,7 @@ app.configure(function(){
 
   app.use(express.session({
     secret: config.cookie_secret
-  , store: new MongoStore({
-      db: 'lootlistdb'
-    })
+  , store: new MongoStore(sessionStore)
   }))
   app.use(passport.initialize())
   //set value to receive x-xsrf-token header
