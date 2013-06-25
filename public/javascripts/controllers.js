@@ -99,7 +99,8 @@ function JoinGroupsCtrl($scope, $http, $location) {
 }
 
 function GroupCtrl ($scope, $routeParams, $http) {
-  $http.get('groups/' + $routeParams.name).success(function(data) {
+  //change this to another route that serves json only
+  $http.get('/groups/api/' + $routeParams.name).success(function(data) {
     var len = data.loot.length
     for (var i=0;i<len;i++) { 
       data.loot[i].edit = false
@@ -111,6 +112,64 @@ function GroupCtrl ($scope, $routeParams, $http) {
     $scope.loots = data.loot
     $scope.groups = data.groups
   })
+
+  $scope.readableDate = readableDate
+
+  $scope.submit = function() {
+    var postData = {
+      xcoord: $scope.xcoord
+    , ycoord: $scope.ycoord
+    , comment: $scope.comment
+    , date: Date.now()
+    }
+    $http.post('/groups/api/' + $routeParams.name, postData).success(function(data) {
+      data.edit = false
+      data.submit = true
+      data.delete = false
+      data.cancel = true
+      data.readonly = true
+      $scope.loots.push(data)
+      $scope.xcoord = ''
+      $scope.ycoord = ''
+      $scope.comment = ''
+    })
+  }
+
+  $scope.edit = function(loot) {
+    //get current loot and save to access incase user cancels
+    //clone it using JSON so that it doesnt reference same obj
+    $scope[loot._id] = JSON.parse(JSON.stringify(loot))
+    editModeToggle(loot)
+  }
+
+  $scope.submitEdited = function(loot, $index) {
+    var putData = {
+      _id: loot._id
+    , loot: {
+        xcoord: loot.loot.xcoord
+      , ycoord: loot.loot.ycoord
+      , comment: loot.loot.comment
+      , date: Date.now()
+      } 
+    }
+    $http.put('/groups/api/' + $routeParams.name, putData).success(function() {
+      loot.loot = putData.loot
+      editModeToggle(loot)
+      $scope.loots[$index] = loot
+    })
+  }
+
+  $scope.delete = function(loot, $index) {
+    $http.delete('/groups/api/' + $routeParams.name + '/' + loot._id).success(function() {
+      $scope.loots.splice($index, 1)
+    })
+  }
+
+  $scope.cancel = function(loot, $index) {
+    //reverting to old data saved inside .edit
+    $scope.loots[$index] = $scope[loot._id]
+    editModeToggle(loot)
+  }
 }
 
 function editModeToggle(inst) {

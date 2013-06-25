@@ -1,4 +1,5 @@
 var restrictToGroupMembers = require('./middleware/restrict_to_group_members')
+  , getSteamSummary = require('./middleware/steamapi')
 
 module.exports = function(app) {
   //f5 shouldnt 500
@@ -6,31 +7,8 @@ module.exports = function(app) {
     res.redirect('/')
   })
 
-  app.get('/groups/:name', restrictToGroupMembers, function(req, res, next) {
-    var name = req.params.name
-
-    app.db.getGroupLoot(name, function(err, loot) {
-      if (err) next(err)
-      else {
-        res.json(loot)
-      }
-    })
-  })
-
-  app.post('/groups/:name', restrictToGroupMembers, function(req, res, next) {
-    var name = req.params.name
-
-
-  })
-
-  app.del('/groups/:name', restrictToGroupMembers, function(req, res, next) {
-    var name = req.params.name
-
-  })
-
-  app.put('/groups/:name', restrictToGroupMembers, function(req, res, next) {
-    var name = req.params.name
-    
+  app.get('/groups/:name', restrictToGroupMembers, getSteamSummary, function(req, res) {
+    res.render('layout')
   })
 
   app.post('/groups', function(req, res, next) {
@@ -71,7 +49,14 @@ module.exports = function(app) {
         if (err) next(err) 
         else {
           if (auth) {
-            res.send(200)
+            app.db.addGroupToUser(openid, data.group, function(err) {
+              if (err) next(err)
+              else {
+                //update session
+                req.session.user.groups.push(data.group)
+                res.send(201)
+              }
+            })
           } else {
             res.send(404)
           }
