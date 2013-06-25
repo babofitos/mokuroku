@@ -1,6 +1,12 @@
 - if (user) {
+  div#current-list Personal
+  div#groups-list
+    //- for list of groups user is in, make li for each
+    ul
+    each group in groups
+      li=group
   div#navbar
-    ol
+    ul
       li
         p#profile
           span#avatar
@@ -12,6 +18,8 @@
           input(type="hidden", name="_csrf", value=token)
           input(type="hidden", name="_method", value="DELETE")
           input#logout-button(type="submit", value="Logout")
+      li
+        a(href="/groups") Create Group
   div(ng-view)
 - } else {
   a(href='/session')

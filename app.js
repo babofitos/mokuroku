@@ -13,6 +13,7 @@ var express = require('express')
   , csrf = require('./routes/middleware/csrf').csrf
   , csrfValue = require('./routes/middleware/csrf').csrfValue
   , getSteamSummary = require('./routes/middleware/steamapi')
+  , getUserGroups = require('./routes/middleware/get_user_groups')
 
 var app = express()
 
@@ -76,11 +77,15 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', csrf, getSteamSummary, routes.index)
+app.get('/', csrf, getUserGroups, getSteamSummary, routes.index)
 
 app.get('/partials/:name', routes.partials)
+
+require('./routes/groups')(app)
+
 require('./routes/session')(app)
 require('./routes/api')(app)
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

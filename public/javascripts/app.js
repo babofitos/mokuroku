@@ -5,6 +5,10 @@ angular.module('lootlist', [])
         templateUrl: 'partials/index'
       , controller: 'IndexCtrl'
       })
+      .when('/groups/', {
+        templateUrl: '/partials/groups_new'
+      , controller: 'NewGroupsCtrl'
+      })
       .otherwise({redirectTo: '/'})
     $locationProvider.html5Mode(true)
   }])

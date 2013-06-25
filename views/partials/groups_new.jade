@@ -1,0 +1,8 @@
+h2 Create a new group
+form(id="create-group", method="post", action="/groups")
+  label(for="group") Group Name
+  input(type="text", name="group")
+  label(for="group-password") Group Password
+  input(type="password", name="group-password")
+  div#group-submit-container
+    input(type="submit", value="Create Group")

@@ -50,3 +50,8 @@ table th {
 .date-th {
   width:200px;
 }
+
+#create-group label {
+  display:block;
+  width: 200px;
+}
