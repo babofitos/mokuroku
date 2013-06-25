@@ -3,8 +3,6 @@ function getUserGroups(req, res, next) {
   //if logged in, extract
   if (req.session.user) {
     req.groups = req.session.user.groups
-    console.log('res locals', res.locals.groups)
-    console.log('groups', req.session)
   }
   next()
 }

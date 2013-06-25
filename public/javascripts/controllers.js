@@ -12,10 +12,7 @@ function IndexCtrl($scope, $http, $location) {
     $scope.groups = data.groups
   })
 
-  $scope.readableDate = function(date) {
-    var date = new Date(date).toString().split(' GMT')
-    return date[0]
-  }
+  $scope.readableDate = readableDate
 
   $scope.submit = function() {
     var postData = {
@@ -74,13 +71,6 @@ function IndexCtrl($scope, $http, $location) {
   }
 }
 
-function editModeToggle(inst) {
-  inst.edit = !inst.edit
-  inst.submit = !inst.submit
-  inst.delete = !inst.delete
-  inst.cancel = !inst.cancel
-  inst.readonly = !inst.readonly
-}
 
 function NewGroupsCtrl($scope, $http, $location) {
   $scope.submit = function() {
@@ -106,4 +96,32 @@ function JoinGroupsCtrl($scope, $http, $location) {
       $location.path('/')
     })
   }
+}
+
+function GroupCtrl ($scope, $routeParams, $http) {
+  $http.get('groups/' + $routeParams.name).success(function(data) {
+    var len = data.loot.length
+    for (var i=0;i<len;i++) { 
+      data.loot[i].edit = false
+      data.loot[i].submit = true
+      data.loot[i].delete = false
+      data.loot[i].cancel = true
+      data.loot[i].readonly = true
+    }
+    $scope.loots = data.loot
+    $scope.groups = data.groups
+  })
+}
+
+function editModeToggle(inst) {
+  inst.edit = !inst.edit
+  inst.submit = !inst.submit
+  inst.delete = !inst.delete
+  inst.cancel = !inst.cancel
+  inst.readonly = !inst.readonly
+}
+
+function readableDate(date) {
+  var date = new Date(date).toString().split(' GMT')
+  return date[0]
 }

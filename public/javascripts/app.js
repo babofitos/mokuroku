@@ -13,6 +13,10 @@ angular.module('lootlist', [])
         templateUrl: '/partials/groups_join'
       , controller: 'JoinGroupsCtrl'
       })
+      .when('/groups/:name', {
+        templateUrl: '/partials/group'
+      , controller: 'GroupCtrl'
+      })
       .otherwise({redirectTo: '/'})
     $locationProvider.html5Mode(true)
   }])
