@@ -8,7 +8,6 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , api = require('./routes/api')
-  , config = require('./config.json')
   , MongoStore = require('connect-mongo')(express)
   , passport = require('passport')
   , csrf = require('./routes/middleware/csrf').csrf
@@ -16,22 +15,21 @@ var express = require('express')
   , getSteamSummary = require('./routes/middleware/steamapi')
 
 var app = express()
-app.settings.env = 'production'
-var db = app.settings.env == 'development' ? require('./lib/db')(config.devdb) 
-  : require('./lib/db')(config.proddb)
 
-var devStore = {
-  db: config.devdbname
-, 
+var config = app.settings.env == 'development' ? require('./config.json') 
+  : require('./config-production.json')
+
+app.config = config
+
+var db = require('./lib/db')(config.db)
+
+var sessionStore = {
+  db: config.db_name
+, port: config.port
+, host: config.host
+, username: config.user
+, password: config.pw
 }
-var prodStore = {
-  db: config.proddbname
-, port: config.prodport
-, host: config.prodhost
-, username: config.produser
-, password: config.prodpw
-}
-var sessionStore = app.settings.env == 'development' ? devStore : prodStore
 
 app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));

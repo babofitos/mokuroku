@@ -1,11 +1,12 @@
 var SteamStrategy = require('passport-steam').Strategy
 
 module.exports = function(app) {
-  app.passport.use(new SteamStrategy({ 
-    returnURL: 'http://localhost:3000/auth/return'
-    , realm: 'http://localhost:3000'
-    }
-  , function(identifier, profile, done) {
+  var strategy = {
+    returnURL: app.config.url + "auth/return"
+    , realm: app.config.url
+  }
+
+  app.passport.use(new SteamStrategy(strategy, function(identifier, profile, done) {
       //callback after finishing auth
       //done passes to passport.authenticate
       return done(null, identifier)
