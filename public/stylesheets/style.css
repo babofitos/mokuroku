@@ -29,6 +29,7 @@ input[readonly] {
 #navbar li {
   list-style: none;
   float:left;
+  padding-right: 5px;
 }
 
 #profile {

@@ -1,8 +1,8 @@
-h2 Create a new group
-form(id="create-group", method="post")
+h2 Join an existing group
+form(id="join-group", method="post")
   label(for="group") Group Name
   input(type="text", ng-model="group")
   label(for="group-password") Group Password
   input(type="password", ng-model="password")
-  div#group-submit-container
-    button(ng-click="submit()") Create Group
+  div#join-group-submit-container
+    button(ng-click="submit()") Join Group

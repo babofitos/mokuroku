@@ -80,3 +80,29 @@ function editModeToggle(inst) {
   inst.cancel = !inst.cancel
   inst.readonly = !inst.readonly
 }
+
+function NewGroupsCtrl($scope, $http, $location) {
+  $scope.submit = function() {
+    var postData = {
+      group: $scope.group
+    , password: $scope.password
+    }
+
+    $http.post('/groups', postData).success(function(data) {
+      $location.path('/')
+    })
+  }
+}
+
+function JoinGroupsCtrl($scope, $http, $location) {
+  $scope.submit = function() {
+    var postData = {
+      group: $scope.group
+    , password: $scope.password
+    }
+
+    $http.post('/join', postData).success(function(data) {
+      $location.path('/')
+    })
+  }
+}

@@ -4,7 +4,8 @@
     //- for list of groups user is in, make li for each
     ul
     each group in groups
-      li=group
+      li
+        a(href="/groups/#{group}") #{group}
   div#navbar
     ul
       li
@@ -20,6 +21,8 @@
           input#logout-button(type="submit", value="Logout")
       li
         a(href="/groups") Create Group
+      li
+        a(href="/join") Join Group
   div(ng-view)
 - } else {
   a(href='/session')
