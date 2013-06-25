@@ -12,6 +12,8 @@ function IndexCtrl($scope, $http, $location) {
     $scope.groups = data.groups
   })
 
+  $scope.currentList = "Personal"
+
   $scope.readableDate = readableDate
 
   $scope.submit = function() {
@@ -113,6 +115,7 @@ function GroupCtrl ($scope, $routeParams, $http) {
     $scope.groups = data.groups
   })
 
+  $scope.currentList = $routeParams.name
   $scope.readableDate = readableDate
 
   $scope.submit = function() {

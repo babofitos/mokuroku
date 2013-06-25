@@ -1,7 +1,10 @@
 div#groups-list
   ul
+    li
+      a(href='/') Personal
     li(ng-repeat="group in groups")
       a(href="/groups/{{group}}") {{group}}
+h2 {{currentList}}
 form#new-loot-form
   input(ng-model="xcoord", type="text", placeholder="X")
   input(ng-model="ycoord", type="text", placeholder="Y")

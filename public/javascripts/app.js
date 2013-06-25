@@ -14,7 +14,7 @@ angular.module('lootlist', [])
       , controller: 'JoinGroupsCtrl'
       })
       .when('/groups/:name', {
-        templateUrl: '/partials/group'
+        templateUrl: '/partials/index'
       , controller: 'GroupCtrl'
       })
       .otherwise({redirectTo: '/'})
