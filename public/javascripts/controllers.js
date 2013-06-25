@@ -1,14 +1,15 @@
 function IndexCtrl($scope, $http, $location) {
   $http.get('/list').success(function(data, status) {
-    var len = data.length
+    var len = data.loot.length
     for (var i=0;i<len;i++) {
-      data[i].edit = false
-      data[i].submit = true
-      data[i].delete = false
-      data[i].cancel = true
-      data[i].readonly = true
+      data.loot[i].edit = false
+      data.loot[i].submit = true
+      data.loot[i].delete = false
+      data.loot[i].cancel = true
+      data.loot[i].readonly = true
     }
-    $scope.loots = data
+    $scope.loots = data.loot
+    $scope.groups = data.groups
   })
 
   $scope.readableDate = function(date) {

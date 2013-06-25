@@ -13,7 +13,6 @@ var express = require('express')
   , csrf = require('./routes/middleware/csrf').csrf
   , csrfValue = require('./routes/middleware/csrf').csrfValue
   , getSteamSummary = require('./routes/middleware/steamapi')
-  , getUserGroups = require('./routes/middleware/get_user_groups')
 
 var app = express()
 
@@ -77,7 +76,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', csrf, getUserGroups, getSteamSummary, routes.index)
+app.get('/', csrf, getSteamSummary, routes.index)
 
 app.get('/partials/:name', routes.partials)
 

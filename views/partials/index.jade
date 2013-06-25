@@ -1,3 +1,7 @@
+div#groups-list
+  ul
+    li(ng-repeat="group in groups")
+      a(href="/groups+{{group}}") {{group}}
 form#new-loot-form
   input(ng-model="xcoord", type="text", placeholder="X")
   input(ng-model="ycoord", type="text", placeholder="Y")

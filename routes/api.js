@@ -1,12 +1,16 @@
 var restrictToUsers = require('./middleware/restrict_to_users')
+  , getUserGroups = require('./middleware/get_user_groups')
 
 module.exports = function(app) {
-  app.get('/list', restrictToUsers, function(req, res, next) {
+  app.get('/list', restrictToUsers, getUserGroups, function(req, res, next) {
     //get openid from session and query db
     app.db.all(req.session.user.openid, function(err, results) {
       if (err) next(err)
       else {
-        res.json(results)
+        res.json({
+          groups: req.groups
+        , loot: results
+        })
       }
     })
   })
