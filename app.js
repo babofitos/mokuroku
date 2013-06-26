@@ -47,6 +47,7 @@ app.configure(function(){
   app.use(express.session({
     secret: config.cookie_secret
   , store: new MongoStore(sessionStore)
+  , cookie: {maxAge: 1000*60*60*24*365}
   }))
   app.use(passport.initialize())
   //set value to receive x-xsrf-token header
