@@ -43,7 +43,6 @@ app.configure(function(){
   app.use(express.limit('50kb'))
   app.use(express.bodyParser());
   app.use(express.cookieParser())
-
   app.use(express.session({
     secret: config.cookie_secret
   , store: new MongoStore(sessionStore)

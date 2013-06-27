@@ -56,3 +56,9 @@ table th {
   display:block;
   width: 200px;
 }
+
+#groups-list li {
+  list-style:none;
+  padding: 0 10px;
+  display:inline;
+}
