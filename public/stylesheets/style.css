@@ -57,8 +57,16 @@ table th {
   width: 200px;
 }
 
+#groups-list ul {
+  margin: 0;
+}
+
 #groups-list li {
   list-style:none;
   padding: 0 10px;
   display:inline;
+}
+
+table input {
+  width: 100%;
 }
