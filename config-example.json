@@ -1,0 +1,7 @@
+{
+  "cookie_secret": "a secret",
+  "steamapikey": "",
+  "db": "mongodb://localhost:27017/somedb",
+  "url": "http://",
+  "db_name": "somedb"
+}

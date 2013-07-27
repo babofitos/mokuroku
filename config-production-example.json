@@ -1,0 +1,11 @@
+{
+  "cookie_secret": "a secret",
+  "steamapikey": "",
+  "url": "http://",
+  "db": "mongodb://user:pw@host:1337/db",
+  "host": "host",
+  "port": 1337,
+  "db_name": "db",
+  "user": "user",
+  "pw": "pw"
+}
